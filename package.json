@@ -3,10 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server"
+    "client": "cd client && npm start",
+    "start": "concurrently \"node server\" \"npm run client\""
+    
   },
   "dependencies": {
     "@faker-js/faker": "^6.0.0",
+    "concurrently": "^7.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   }
