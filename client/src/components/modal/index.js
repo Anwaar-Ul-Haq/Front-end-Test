@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
-function EditModal({
-  open,
-  product,
-  handleInputChange,
-  handleFileChange,
-  onCloseModal,
-}) {
+function EditModal({ open, product, onCloseModal, getDataFromChild, number }) {
+  const [values, setValues] = useState({
+    name: "",
+    price: "",
+    description: "",
+  });
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    setValues({
+      ...values,
+      name: product?.name,
+      price: product?.price,
+      description: product?.description,
+    });
+  }, []);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleOnChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getDataFromChild(values, number, image);
+    onCloseModal();
+  };
+
   return (
     <Modal
       open={open}
@@ -23,8 +47,8 @@ function EditModal({
             <input
               type="text"
               name="name"
-              value={product?.name}
-              onChange={(e) => handleInputChange(e)}
+              value={values.name}
+              onChange={handleOnChange}
               className="border w-full p-2 rounded-md"
             />
           </div>
@@ -33,8 +57,8 @@ function EditModal({
             <input
               type="text"
               name="price"
-              value={product?.price}
-              onChange={(e) => handleInputChange(e)}
+              value={values.price}
+              onChange={handleOnChange}
               className="border w-full p-2 rounded-md"
             />
           </div>
@@ -45,8 +69,8 @@ function EditModal({
               rows={5}
               cols="50"
               name="description"
-              value={product?.description}
-              onChange={(e) => handleInputChange(e)}
+              value={values.description}
+              onChange={handleOnChange}
               className="border w-full p-2 rounded-md"
             />
           </div>
@@ -57,6 +81,9 @@ function EditModal({
               onChange={(e) => handleFileChange(e)}
               className="border w-full p-2 rounded-md"
             />
+          </div>
+          <div className="py-3 bg-blue-400 text-center rounded-md">
+            <button onClick={handleSubmit}>Save</button>
           </div>
         </form>
       </div>
