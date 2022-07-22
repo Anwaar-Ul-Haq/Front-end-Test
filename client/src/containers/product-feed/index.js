@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../../components/product-card";
 
-const ProductFeed = () => {
+const ProductFeed = ({ getindexNumber }) => {
   const [products, setProducts] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [updatedNumber, setUpdatedNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
   const fetchProducts = async () => {
@@ -27,15 +26,11 @@ const ProductFeed = () => {
   };
 
   const getUpdatedNumber = (data) => {
-    setUpdatedNumber(data + 1);
+    getindexNumber(data);
   };
 
   return (
     <>
-      <p className="py-5 text-center mt-10 text-lg">
-        Product {updatedNumber && updatedNumber !== 0 ? updatedNumber : ""} was
-        changed
-      </p>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-20 mx-10">
         {products?.map((product, index) => {
           return (

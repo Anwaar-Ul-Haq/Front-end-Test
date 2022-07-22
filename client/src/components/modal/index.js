@@ -12,7 +12,6 @@ function EditModal({ open, product, onCloseModal, getDataFromChild, number }) {
 
   useEffect(() => {
     setValues({
-      ...values,
       name: product?.name,
       price: product?.price,
       description: product?.description,
@@ -82,8 +81,11 @@ function EditModal({ open, product, onCloseModal, getDataFromChild, number }) {
               className="border w-full p-2 rounded-md"
             />
           </div>
-          <div className="py-3 bg-blue-400 text-center rounded-md">
-            <button onClick={handleSubmit}>Save</button>
+          <div
+            className="py-3 bg-blue-400 text-center rounded-md cursor-pointer"
+            onClick={handleSubmit}
+          >
+            <button>Save</button>
           </div>
         </form>
       </div>
